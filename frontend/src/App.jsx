@@ -28,7 +28,7 @@ function App() {
           <TbUsers className='floating-icon bottom-40 left-100 text-purple-500' />
           <LuZap className='floating-icon bottom-50 right-75 text-yellow-500' />
 
-          <div className='mt-[10%] flex justify-center items-center flex-col mb-46.5'>
+          <div id='text-main' className='mt-[10%] flex justify-center items-center flex-col mb-46.5'>
             <div className={`${theme === 'light' ? 'bg-[#d7e0e0] text-[#1d724a]' : 'bg-[#0e1921] text-[#237550]'} flex justify-center items-center gap-2 font-medium px-5 py-2 rounded-full text-sm`}>
               <LuSparkles />
               <span>{lang === 'en' ? "Georgia's Premier Programming Academy" : 'საქართველოს პრემიერ პროგრამირების აკადემია'}</span>
