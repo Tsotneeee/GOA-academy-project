@@ -1,7 +1,8 @@
 let { users, nextId } = require('../data/data.cjs');
+const { isEmpty, findUser, updateObject } = require('../services/usersServices.cjs');
 
 function getAllUsers(req, res) { // Get all users
-    if (users.length == 0) {
+    if (isEmpty(users)) {
         res.status(404).json({ success: false, message: "No users found" });
         return;
     }
@@ -9,8 +10,7 @@ function getAllUsers(req, res) { // Get all users
 }
 
 function getUserById(req, res) { // Get user by ID
-    const userId = parseInt(req.params.id);
-    const user = users.find(u => u.id === userId);
+    const user = findUser(req.params.id, users);
     if (!user) {
         return res.status(404).json({ success: false, message: "User not found" });
     }
@@ -19,10 +19,10 @@ function getUserById(req, res) { // Get user by ID
 
 function createUser(req, res) { // Create a new user
     const newUser = req.body;
-    if (!newUser.userName) {
+    if (!newUser.name) {
         return res.status(400).json({ success: false, message: "User name is required" });
     }
-    else if (users.some(u => u.userName === newUser.userName)) {
+    else if (users.some(u => u.name === newUser.name)) {
         return res.status(409).json({ success: false, message: "User already exists" });
     }
     newUser.id = nextId++;
@@ -31,13 +31,22 @@ function createUser(req, res) { // Create a new user
 }
 
 function deleteUser(req, res) { // Delete user by ID
-    const userId = parseInt(req.params.id);
-    const userIndex = users.findIndex(u => u.id === userId);
+    const userIndex = findUser(req.params.id, users, true);
     if (userIndex === -1) {
         return res.status(404).json({ success: false, message: "User not found" });
     }
-    users = users.filter(u => u.id !== userId);
+    users = users.filter(u => u.id !== parseInt(req.params.id));
     res.status(200).json({ success: true, message: "User deleted successfully" });
 }
 
-module.exports = { getAllUsers, getUserById, createUser, deleteUser };
+function updateUser(req, res) {
+    userIndex = findUser(req.params.id, users, true);
+    if (userIndex === -1) {
+        return res.status(404).json({ success: false, message: "User not found" });
+    }
+    const updatedUser = updateObject(users[userIndex], req.body);
+    users[userIndex] = updatedUser;
+    res.status(200).json({ success: true, data: updatedUser });
+}
+
+module.exports = { getAllUsers, getUserById, createUser, deleteUser, updateUser };
