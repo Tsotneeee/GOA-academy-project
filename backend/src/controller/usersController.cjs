@@ -39,7 +39,7 @@ function deleteUser(req, res) { // Delete user by ID
     res.status(200).json({ success: true, message: "User deleted successfully" });
 }
 
-function updateUser(req, res) {
+function updateUser(req, res) { // Update user by ID
     userIndex = findUser(req.params.id, users, true);
     if (userIndex === -1) {
         return res.status(404).json({ success: false, message: "User not found" });

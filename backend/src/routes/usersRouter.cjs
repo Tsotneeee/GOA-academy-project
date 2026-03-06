@@ -9,6 +9,8 @@ usersRouter.get('/', getAllUsers); // Get all users
 
 usersRouter.get('/:id', getUserById); // Get user by ID
 
+//todo: login
+
 usersRouter.post('/', createUser); // Create a new user
 
 usersRouter.put('/:id', updateUser); // Update user by ID

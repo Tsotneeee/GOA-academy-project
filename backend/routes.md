@@ -15,3 +15,8 @@ users get all -> (if success) {success: true, data:users} (else) {success: false
 user by id -> (if success) {success: true, data:user} (else) {success: false, message:"string"}
 
 user create -> (if success) {success: true, data:newUser} (else) {success: false, message:"string"}
+
+## db tables
+
+users (id , name, email, password, role, group_id, crew_id)
+groups (id , name)
